@@ -1,23 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
-
+import "./App.css";
+import movies from "./movies";
+// components
+import Home from "./Components/Home";
+import MovieList from "./Components/MovieList";
+import MovieDetails from "./Components/MovieDetails";
+// styles
+import { GlobalStyle } from "./styles";
+import { ThemeProvider } from "styled-components";
+// Router
+import { Route, Switch } from "react-router";
+// usestates
+import React, { useState } from "react";
+//Link
+import { Link } from "react-router-dom";
+const theme = {
+  mainColor: "#242424", // main font color
+  backgroundColor: "#fefafb", // main background color
+  lightpurple: "light purple",
+};
 function App() {
+  // const movie = movie[0];
+  const [movie, setMovie] = useState(null);
+  const setView = () => {
+    if (movie) return <MovieDetails movie={movie} />;
+    return <MovieList setMovie={setMovie} />;
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        {/* <Switch> */}
+        {/* <Route path="/movies/movie.id"> */}
+        <MovieDetails movie={movies} />
+        {/* </Route> */}
+        {/* <Route exact path="/"> */}
+        <Home />
+        {/* </Route> */}
+        {/* </Switch> */}
+        {setView()}
+      </ThemeProvider>
     </div>
   );
 }
